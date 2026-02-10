@@ -26,7 +26,10 @@
             <h1 class="title">MBTI 少年版測驗</h1>
             <p class="subtitle">探索你的性格顏色，瞭解最真實的自己！</p>
             <div class="start-card">
-                <p>這項測驗共有 24 道題，沒有對錯之分，誠實回答就可以了。</p>
+                <p>這項測驗共有 24 道題，誠實回答就可以了。</p>
+                <div class="input-group">
+                    <input type="text" id="user-name" placeholder="請輸入你的姓名或暱稱" aria-label="姓名">
+                </div>
                 <button id="start-btn" class="primary-btn">開始測驗</button>
             </div>
         </section>
@@ -53,8 +56,9 @@
 
         <!-- Result Screen -->
         <section id="result-screen">
-            <h2 class="result-title">你的測驗結果是</h2>
+            <h2 class="result-title">測驗結果</h2>
             <div class="result-card">
+                <div id="display-name" class="user-display-name"></div>
                 <div id="mbti-code" class="mbti-code">INTJ</div>
                 <div id="mbti-name" class="mbti-name">建築師</div>
                 <p id="mbti-description" class="mbti-description"></p>
@@ -63,7 +67,10 @@
                     <!-- Dimension bars will be injected here -->
                 </div>
 
-                <button id="restart-btn" class="secondary-btn">重新測驗</button>
+                <div class="action-btns">
+                    <button id="copy-btn" class="primary-btn">複製結果</button>
+                    <button id="restart-btn" class="secondary-btn">重新測驗</button>
+                </div>
             </div>
         </section>
     </main>

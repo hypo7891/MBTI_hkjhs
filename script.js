@@ -1,5 +1,6 @@
 let questions = [];
 let currentIndex = 0;
+let userName = "";
 let scores = {
     E: 0, I: 0,
     S: 0, N: 0,
@@ -16,6 +17,7 @@ const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
 const questionNumber = document.getElementById('question-number');
 const progressPercent = document.getElementById('progress-percent');
+const nameInput = document.getElementById('user-name');
 
 // Type Data
 const mbtiTypes = {
@@ -28,7 +30,7 @@ const mbtiTypes = {
     'ENFJ': { name: '主人公', desc: '富有魅力且鼓舞人心的領導者，能夠使聽眾聽得出神。' },
     'ENFP': { name: '競選者', desc: '熱情、有創造力且自由自在的靈魂，總能找到理由微笑。' },
     'ISTJ': { name: '物流師', desc: '務實且注重事實的人，可靠性不容置疑。' },
-    'ISFJ': { name: '守護者', desc: '非常專注而溫暖的守護者，時刻準備著保護愛的人。' },
+    'ISFJ': { name: '守護者', desc: '非常專注而溫慢的守護者，時刻準備著保護愛的人。' },
     'ESTJ': { name: '總經理', desc: '優秀的管理者，在管理事物或人方面有著無與倫比的能力。' },
     'ESFJ': { name: '執政官', desc: '極度關心他人、社交型且受歡迎的人，總是熱心提供幫助。' },
     'ISTP': { name: '鑑賞家', desc: '大膽且實際的實驗家，擅長使用各類工具。' },
@@ -52,6 +54,7 @@ async function init() {
 }
 
 function startQuiz() {
+    userName = nameInput.value.trim() || "神秘的朋友";
     startScreen.classList.remove('active');
     quizScreen.classList.add('active');
     showQuestion();
@@ -102,6 +105,7 @@ function showResult() {
 
     const typeInfo = mbtiTypes[mbti] || { name: '未知', desc: '性格太特殊了，我們暫時無法精確定義。' };
 
+    document.getElementById('display-name').innerText = `${userName}，你的測驗結果是：`;
     document.getElementById('mbti-code').innerText = mbti;
     document.getElementById('mbti-name').innerText = typeInfo.name;
     document.getElementById('mbti-description').innerText = typeInfo.desc;
@@ -119,19 +123,34 @@ function showResult() {
 
     dimensions.forEach(dim => {
         const total = scores[dim.left] + scores[dim.right];
-        const leftPercent = total === 0 ? 50 : (scores[dim.left] / total) * 100;
+        const leftPercent = total === 0 ? 50 : Math.round((scores[dim.left] / total) * 100);
+        const rightPercent = 100 - leftPercent;
 
         const row = document.createElement('div');
         row.className = 'dim-row';
         row.innerHTML = `
-            <span class="dim-label">${dim.left}</span>
+            <div class="dim-header">
+                <span>${dim.left} (${leftPercent}%)</span>
+                <span>${dim.label}</span>
+                <span>${rightPercent}% (${dim.right})</span>
+            </div>
             <div class="dim-track">
                 <div class="dim-bar" style="width: ${leftPercent}%"></div>
             </div>
-            <span class="dim-label">${dim.right}</span>
         `;
         statsContainer.appendChild(row);
     });
+
+    // Copy Functionality
+    document.getElementById('copy-btn').onclick = () => {
+        const copyText = `姓名：${userName}\nMBTI 結果：${mbti} ${typeInfo.name}\n\n描述：${typeInfo.desc}\n\n測驗網址：${window.location.href}`;
+        navigator.clipboard.writeText(copyText).then(() => {
+            const btn = document.getElementById('copy-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "✅ 已複製！";
+            setTimeout(() => btn.innerText = originalText, 2000);
+        });
+    };
 }
 
 init();
