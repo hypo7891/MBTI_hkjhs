@@ -313,6 +313,26 @@ input:focus {
     transform: translateX(5px);
 }
 
+.quiz-footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.text-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.text-btn:hover {
+    color: var(--text-main);
+}
+
 /* Result Screen */
 .user-display-info {
     font-size: 1.1rem;

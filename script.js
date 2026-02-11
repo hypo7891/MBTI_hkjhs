@@ -1,5 +1,6 @@
 let questions = [];
 let currentIndex = 0;
+let userAnswers = []; // Track selected options to allow going back
 let userClass = "";
 let userSeat = "";
 let userName = "";
@@ -23,6 +24,7 @@ const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
 const questionNumber = document.getElementById('question-number');
 const progressPercent = document.getElementById('progress-percent');
+const prevBtn = document.getElementById('prev-btn');
 
 // Inputs
 const classInput = document.getElementById('user-class');
@@ -57,6 +59,7 @@ async function init() {
 
         document.getElementById('start-btn').addEventListener('click', startQuiz);
         document.getElementById('restart-btn').addEventListener('click', () => location.reload());
+        prevBtn.addEventListener('click', prevQuestion);
     } catch (error) {
         console.error('Error loading questions:', error);
         questionText.innerText = "無法載入題目，請稍後再試。";
@@ -83,6 +86,9 @@ function showQuestion() {
     progressFill.style.width = `${percent}%`;
     progressPercent.innerText = `${percent}%`;
 
+    // Toggle Prev Button
+    prevBtn.style.display = currentIndex > 0 ? 'block' : 'none';
+
     optionsContainer.innerHTML = '';
     q.options.forEach(opt => {
         const btn = document.createElement('button');
@@ -94,6 +100,7 @@ function showQuestion() {
 }
 
 function selectOption(scoreLetter) {
+    userAnswers.push(scoreLetter);
     scores[scoreLetter]++;
     currentIndex++;
 
@@ -101,6 +108,17 @@ function selectOption(scoreLetter) {
         showQuestion();
     } else {
         showResult();
+    }
+}
+
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        const lastScore = userAnswers.pop();
+        if (lastScore) {
+            scores[lastScore]--;
+        }
+        showQuestion();
     }
 }
 
