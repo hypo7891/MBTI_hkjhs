@@ -1,13 +1,6 @@
 /**
- * Google Apps Script Backend for MBTI Quiz Results
- * 
- * Instructions:
- * 1. Create a new Google Sheet.
- * 2. Go to Extensions > Apps Script.
- * 3. Paste this code into the script editor.
- * 4. Deploy > New Deployment > Web App.
- * 5. Set "Execute as" to "Me" and "Who has access" to "Anyone".
- * 6. Copy the Web App URL and paste it into your script.js.
+ * MBTI Quiz Backend - Google Apps Script
+ * Handles saving quiz results to a Google Sheet.
  */
 
 function doPost(e) {
@@ -15,48 +8,60 @@ function doPost(e) {
         const data = JSON.parse(e.postData.contents);
         const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
-        // Header setup if sheet is empty
+        // Set headers if sheet is empty
         if (sheet.getLastRow() === 0) {
             sheet.appendRow([
                 "時間戳記",
+                "班級",
+                "座號",
                 "姓名",
-                "MBTI 結果",
-                "性格類型",
-                "E/I %",
-                "S/N %",
-                "T/F %",
-                "J/P %",
-                "原始分數內容"
+                "MBTI 代碼",
+                "性格名稱",
+                "能量(EI) %",
+                "感知(SN) %",
+                "判斷(TF) %",
+                "生活(JP) %",
+                "E", "I", "S", "N", "T", "F", "J", "P"
             ]);
+
+            // Format header row
+            sheet.getRange(1, 1, 1, 18).setFontWeight("bold").setBackground("#f3f3f3");
         }
 
-        // Append the result
+        // Append data
         sheet.appendRow([
             new Date(),
-            data.userName,
-            data.mbtiCode,
-            data.mbtiName,
-            data.stats.EI,
-            data.stats.SN,
-            data.stats.TF,
-            data.stats.JP,
-            JSON.stringify(data.scores)
+            data.userClass || "",
+            data.userSeat || "",
+            data.userName || "",
+            data.mbtiCode || "",
+            data.mbtiName || "",
+            data.stats.EI || "",
+            data.stats.SN || "",
+            data.stats.TF || "",
+            data.stats.JP || "",
+            data.scores.E || 0,
+            data.scores.I || 0,
+            data.scores.S || 0,
+            data.scores.N || 0,
+            data.scores.T || 0,
+            data.scores.F || 0,
+            data.scores.J || 0,
+            data.scores.P || 0
         ]);
 
-        return ContentService.createTextOutput(JSON.stringify({
-            "status": "success",
-            "message": "結果已成功存入雲端"
-        })).setMimeType(ContentService.MimeType.JSON);
+        return ContentService.createTextOutput(JSON.stringify({ "status": "success", "message": "Result saved successfully" }))
+            .setMimeType(ContentService.MimeType.JSON);
 
     } catch (error) {
-        return ContentService.createTextOutput(JSON.stringify({
-            "status": "error",
-            "message": error.toString()
-        })).setMimeType(ContentService.MimeType.JSON);
+        return ContentService.createTextOutput(JSON.stringify({ "status": "error", "message": error.toString() }))
+            .setMimeType(ContentService.MimeType.JSON);
     }
 }
 
-// Enable CORS for preflight requests
+/**
+ * Handle OPTIONS requests for CORS (if needed)
+ */
 function doOptions(e) {
     return ContentService.createTextOutput("")
         .setMimeType(ContentService.MimeType.TEXT);

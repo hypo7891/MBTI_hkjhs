@@ -1,5 +1,7 @@
 let questions = [];
 let currentIndex = 0;
+let userClass = "";
+let userSeat = "";
 let userName = "";
 let scores = {
     E: 0, I: 0,
@@ -21,6 +23,10 @@ const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
 const questionNumber = document.getElementById('question-number');
 const progressPercent = document.getElementById('progress-percent');
+
+// Inputs
+const classInput = document.getElementById('user-class');
+const seatInput = document.getElementById('user-seat');
 const nameInput = document.getElementById('user-name');
 
 // Type Data
@@ -58,7 +64,10 @@ async function init() {
 }
 
 function startQuiz() {
-    userName = nameInput.value.trim() || "神秘的朋友";
+    userClass = classInput.value.trim() || "未填寫";
+    userSeat = seatInput.value.trim() || "00";
+    userName = nameInput.value.trim() || "神秘教職員";
+
     startScreen.classList.remove('active');
     quizScreen.classList.add('active');
     showQuestion();
@@ -109,7 +118,7 @@ function showResult() {
 
     const typeInfo = mbtiTypes[mbti] || { name: '未知', desc: '性格太特殊了，我們暫時無法精確定義。' };
 
-    document.getElementById('display-name').innerText = `${userName}，你的測驗結果是：`;
+    document.getElementById('display-info').innerText = `${userClass} 班 ${userSeat} 號 ${userName}，測驗結果：`;
     document.getElementById('mbti-code').innerText = mbti;
     document.getElementById('mbti-name').innerText = typeInfo.name;
     document.getElementById('mbti-description').innerText = typeInfo.desc;
@@ -151,7 +160,7 @@ function showResult() {
 
     // Copy Functionality
     document.getElementById('copy-btn').onclick = () => {
-        const copyText = `姓名：${userName}\nMBTI 結果：${mbti} ${typeInfo.name}\n\n描述：${typeInfo.desc}\n\n測驗網址：${window.location.href}`;
+        const copyText = `班級：${userClass}\n座號：${userSeat}\n姓名：${userName}\nMBTI 結果：${mbti} ${typeInfo.name}\n\n描述：${typeInfo.desc}\n\n測驗網址：${window.location.href}`;
         navigator.clipboard.writeText(copyText).then(() => {
             const btn = document.getElementById('copy-btn');
             const originalText = btn.innerText;
@@ -163,6 +172,8 @@ function showResult() {
     // Auto-submit to GAS if URL is set
     if (GAS_WEB_APP_URL) {
         submitToGAS({
+            userClass,
+            userSeat,
             userName,
             mbtiCode: mbti,
             mbtiName: typeInfo.name,

@@ -81,9 +81,10 @@ body {
 }
 
 .container {
-    width: 90%;
-    max-width: 600px;
+    width: 95%;
+    max-width: 650px;
     z-index: 1;
+    padding: 20px 0;
 }
 
 section {
@@ -109,9 +110,9 @@ section.active {
 
 /* UI Elements */
 .title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
     text-align: center;
     background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
     background-clip: text;
@@ -122,7 +123,7 @@ section.active {
 .subtitle {
     text-align: center;
     color: var(--text-dim);
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     font-size: 1.1rem;
 }
 
@@ -137,11 +138,39 @@ section.active {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-.input-group {
-    margin: 2rem 0 1rem;
+.intro-text {
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
 }
 
-input[type="text"] {
+/* Input Grid */
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 600;
+    padding-left: 0.2rem;
+}
+
+input[type="text"],
+input[type="number"] {
     width: 100%;
     padding: 1rem;
     background: rgba(255, 255, 255, 0.05);
@@ -149,16 +178,36 @@ input[type="text"] {
     border-radius: 12px;
     color: white;
     font-size: 1rem;
-    text-align: center;
     outline: none;
     transition: all 0.2s;
 }
 
-input[type="text"]:focus {
+input:focus {
     border-color: var(--primary);
     background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
 }
 
+/* Source Info */
+.source-info {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+}
+
+.source-info a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.source-info a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
 .primary-btn,
 .secondary-btn {
     padding: 1rem 2rem;
@@ -265,10 +314,11 @@ input[type="text"]:focus {
 }
 
 /* Result Screen */
-.user-display-name {
-    font-size: 1.2rem;
+.user-display-info {
+    font-size: 1.1rem;
     color: var(--text-dim);
     margin-bottom: 0.5rem;
+    font-weight: 600;
 }
 
 .mbti-code {
@@ -332,4 +382,25 @@ input[type="text"]:focus {
     height: 100%;
     background: linear-gradient(90deg, var(--primary), var(--accent));
     transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 480px) {
+    .input-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .start-card,
+    .result-card,
+    .question-container {
+        padding: 1.5rem;
+    }
 }

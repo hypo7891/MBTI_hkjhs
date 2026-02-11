@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTI 少年版測驗</title>
+    <title>新科國中親職教育前測(MBTI 少年版測驗)</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,14 +23,34 @@
     <main class="container">
         <!-- Start Screen -->
         <section id="start-screen" class="active">
-            <h1 class="title">MBTI 少年版測驗</h1>
-            <p class="subtitle">探索你的性格顏色，瞭解最真實的自己！</p>
+            <h1 class="title">新科國中親職教育前測</h1>
+            <p class="subtitle">(MBTI 少年版測驗)</p>
             <div class="start-card">
-                <p>這項測驗共有 24 道題，誠實回答就可以了。</p>
-                <div class="input-group">
-                    <input type="text" id="user-name" placeholder="請輸入你的姓名或暱稱" aria-label="姓名">
+                <p class="intro-text">這項測驗共有 24 道題，誠實回答就可以了。</p>
+
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="user-class">班級</label>
+                        <input type="text" id="user-class" placeholder="例如：701">
+                    </div>
+                    <div class="input-group">
+                        <label for="user-seat">座號</label>
+                        <input type="number" id="user-seat" placeholder="例如：01">
+                    </div>
+                    <div class="input-group full-width">
+                        <label for="user-name">姓名</label>
+                        <input type="text" id="user-name" placeholder="請輸入姓名">
+                    </div>
                 </div>
+
                 <button id="start-btn" class="primary-btn">開始測驗</button>
+
+                <div class="source-info">
+                    <p>題目來源：<a
+                            href="https://www.books.com.tw/products/0011002590?srsltid=AfmBOor9pGr7VePahFesluzip4CCQdD_ZyPK20qzYCNszF2dF1h1l-zJ"
+                            target="_blank">潘老師著作</a></p>
+                    <p>潘老師授權使用、資料僅供4/10新科國中新職教育講座使用</p>
+                </div>
             </div>
         </section>
 
@@ -58,7 +78,7 @@
         <section id="result-screen">
             <h2 class="result-title">測驗結果</h2>
             <div class="result-card">
-                <div id="display-name" class="user-display-name"></div>
+                <div id="display-info" class="user-display-info"></div>
                 <div id="mbti-code" class="mbti-code">INTJ</div>
                 <div id="mbti-name" class="mbti-name">建築師</div>
                 <p id="mbti-description" class="mbti-description"></p>
