@@ -13,7 +13,7 @@ let scores = {
 
 // --- CONFIGURATION ---
 // Replace this with your Google Apps Script Web App URL after deployment
-const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwCuuqZ2o08eQtm56a00zXGDsTB4YxUMw1MlF1O7MV6TXwfIZ7S7ytjhe-R6WQ0Evs1/exec";
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxW2Fb8ZTrxeM7hBQShaBWWZMsjxrdOQydAVyB_-XZpEDPSwGpdRIrl7WywX5AV_fBc/exec";
 
 // UI Elements
 const startScreen = document.getElementById('start-screen');
