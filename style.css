@@ -288,8 +288,15 @@ input[type="text"]:focus {
 .mbti-description {
     color: var(--text-dim);
     line-height: 1.7;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     font-size: 1rem;
+}
+
+.submit-status {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    min-height: 1.2rem;
 }
 
 .dimensions-scores {

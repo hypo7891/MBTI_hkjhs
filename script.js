@@ -8,6 +8,10 @@ let scores = {
     J: 0, P: 0
 };
 
+// --- CONFIGURATION ---
+// Replace this with your Google Apps Script Web App URL after deployment
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzvN2eXhJTokKQDkmADMlKogLVaqX71QDYnABDZRw-bb0msoubvN3F5aZeQcGv3c9il/exec";
+
 // UI Elements
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
@@ -121,10 +125,14 @@ function showResult() {
         { left: 'J', right: 'P', label: '生活' }
     ];
 
+    let dimStats = {};
+
     dimensions.forEach(dim => {
         const total = scores[dim.left] + scores[dim.right];
         const leftPercent = total === 0 ? 50 : Math.round((scores[dim.left] / total) * 100);
         const rightPercent = 100 - leftPercent;
+
+        dimStats[`${dim.left}${dim.right}`] = `${leftPercent}% / ${rightPercent}%`;
 
         const row = document.createElement('div');
         row.className = 'dim-row';
@@ -151,6 +159,42 @@ function showResult() {
             setTimeout(() => btn.innerText = originalText, 2000);
         });
     };
+
+    // Auto-submit to GAS if URL is set
+    if (GAS_WEB_APP_URL) {
+        submitToGAS({
+            userName,
+            mbtiCode: mbti,
+            mbtiName: typeInfo.name,
+            stats: {
+                EI: dimStats.EI,
+                SN: dimStats.SN,
+                TF: dimStats.TF,
+                JP: dimStats.JP
+            },
+            scores: scores
+        });
+    }
+}
+
+async function submitToGAS(data) {
+    const statusEl = document.getElementById('submit-status');
+    if (statusEl) statusEl.innerText = "正在儲存結果到雲端...";
+
+    try {
+        const response = await fetch(GAS_WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Use no-cors for simple GAS POSTs
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (statusEl) statusEl.innerText = "✅ 結果已成功備份至雲端。";
+    } catch (error) {
+        console.error('GAS Submission Error:', error);
+        if (statusEl) statusEl.innerText = "❌ 儲存失敗，請手動複製結果。";
+    }
 }
 
 init();
