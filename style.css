@@ -207,6 +207,15 @@ input:focus {
     text-decoration: underline;
 }
 
+.book-cover {
+    display: block;
+    margin: 1rem auto;
+    max-width: 150px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+}
+
 /* Buttons */
 .primary-btn,
 .secondary-btn {
