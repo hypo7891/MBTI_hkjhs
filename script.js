@@ -61,6 +61,18 @@ async function init() {
         document.getElementById('start-btn').addEventListener('click', startQuiz);
         document.getElementById('restart-btn').addEventListener('click', () => location.reload());
         prevBtn.addEventListener('click', prevQuestion);
+
+        // Add checkbox listener to toggle inputs
+        const otherChildCheckbox = document.getElementById('user-other-child');
+        otherChildCheckbox.addEventListener('change', () => {
+            const isOther = otherChildCheckbox.checked;
+            classInput.disabled = isOther;
+            seatInput.disabled = isOther;
+            if (isOther) {
+                classInput.value = "";
+                seatInput.value = "";
+            }
+        });
     } catch (error) {
         console.error('Error loading questions:', error);
         questionText.innerText = "無法載入題目，請稍後再試。";
@@ -68,10 +80,10 @@ async function init() {
 }
 
 function startQuiz() {
-    userClass = classInput.value.trim() || "未填寫";
-    userSeat = seatInput.value.trim() || "00";
-    userName = nameInput.value.trim() || "神秘教職員";
     userOtherChild = document.getElementById('user-other-child').checked;
+    userClass = userOtherChild ? "非新科國中學生" : (classInput.value.trim() || "未填寫");
+    userSeat = userOtherChild ? "00" : (seatInput.value.trim() || "00");
+    userName = nameInput.value.trim() || "神秘教職員";
 
     startScreen.classList.remove('active');
     quizScreen.classList.add('active');
@@ -139,7 +151,9 @@ function showResult() {
     const typeInfo = mbtiTypes[mbti] || { name: '未知', desc: '性格太特殊了，我們暫時無法精確定義。' };
 
     const identitySuffix = userOtherChild ? " (子女非新科國中學生)" : "";
-    document.getElementById('display-info').innerText = `${userClass} 班 ${userSeat} 號 ${userName}${identitySuffix}，測驗結果：`;
+    const classDisplay = userOtherChild ? userClass : `${userClass} 班`;
+    const seatDisplay = userOtherChild ? "" : ` ${userSeat} 號`;
+    document.getElementById('display-info').innerText = `${classDisplay}${seatDisplay} ${userName}${identitySuffix}，測驗結果：`;
     document.getElementById('mbti-code').innerText = mbti;
     document.getElementById('mbti-name').innerText = typeInfo.name;
     document.getElementById('mbti-description').innerText = typeInfo.desc;
@@ -182,7 +196,8 @@ function showResult() {
     // Copy Functionality
     document.getElementById('copy-btn').onclick = () => {
         const identityInfo = userOtherChild ? " (子女非新科國中學生)" : "";
-        const copyText = `班級：${userClass}\n座號：${userSeat}\n姓名：${userName}${identityInfo}\nMBTI 結果：${mbti} ${typeInfo.name}\n\n描述：${typeInfo.desc}\n\n測驗網址：${window.location.href}`;
+        const classInfo = userOtherChild ? `班級：${userClass}` : `班級：${userClass}\n座號：${userSeat}`;
+        const copyText = `${classInfo}\n姓名：${userName}${identityInfo}\nMBTI 結果：${mbti} ${typeInfo.name}\n\n描述：${typeInfo.desc}\n\n測驗網址：${window.location.href}`;
         navigator.clipboard.writeText(copyText).then(() => {
             const btn = document.getElementById('copy-btn');
             const originalText = btn.innerText;
