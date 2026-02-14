@@ -4,6 +4,7 @@ let userAnswers = []; // Track selected options to allow going back
 let userClass = "";
 let userSeat = "";
 let userName = "";
+let userOtherChild = false;
 let scores = {
     E: 0, I: 0,
     S: 0, N: 0,
@@ -70,6 +71,7 @@ function startQuiz() {
     userClass = classInput.value.trim() || "未填寫";
     userSeat = seatInput.value.trim() || "00";
     userName = nameInput.value.trim() || "神秘教職員";
+    userOtherChild = document.getElementById('user-other-child').checked;
 
     startScreen.classList.remove('active');
     quizScreen.classList.add('active');
@@ -136,7 +138,8 @@ function showResult() {
 
     const typeInfo = mbtiTypes[mbti] || { name: '未知', desc: '性格太特殊了，我們暫時無法精確定義。' };
 
-    document.getElementById('display-info').innerText = `${userClass} 班 ${userSeat} 號 ${userName}，測驗結果：`;
+    const identitySuffix = userOtherChild ? " (子女非新科國中學生)" : "";
+    document.getElementById('display-info').innerText = `${userClass} 班 ${userSeat} 號 ${userName}${identitySuffix}，測驗結果：`;
     document.getElementById('mbti-code').innerText = mbti;
     document.getElementById('mbti-name').innerText = typeInfo.name;
     document.getElementById('mbti-description').innerText = typeInfo.desc;
@@ -178,7 +181,8 @@ function showResult() {
 
     // Copy Functionality
     document.getElementById('copy-btn').onclick = () => {
-        const copyText = `班級：${userClass}\n座號：${userSeat}\n姓名：${userName}\nMBTI 結果：${mbti} ${typeInfo.name}\n\n描述：${typeInfo.desc}\n\n測驗網址：${window.location.href}`;
+        const identityInfo = userOtherChild ? " (子女非新科國中學生)" : "";
+        const copyText = `班級：${userClass}\n座號：${userSeat}\n姓名：${userName}${identityInfo}\nMBTI 結果：${mbti} ${typeInfo.name}\n\n描述：${typeInfo.desc}\n\n測驗網址：${window.location.href}`;
         navigator.clipboard.writeText(copyText).then(() => {
             const btn = document.getElementById('copy-btn');
             const originalText = btn.innerText;
@@ -193,6 +197,7 @@ function showResult() {
             userClass,
             userSeat,
             userName,
+            userOtherChild,
             mbtiCode: mbti,
             mbtiName: typeInfo.name,
             stats: {

@@ -188,6 +188,27 @@ input:focus {
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
 }
 
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem 0.2rem;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.checkbox-group label {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
 /* Source Info */
 .source-info {
     margin-top: 2.5rem;

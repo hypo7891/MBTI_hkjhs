@@ -15,6 +15,7 @@ function doPost(e) {
                 "班級",
                 "座號",
                 "姓名",
+                "身分備註",
                 "MBTI 代碼",
                 "性格名稱",
                 "能量(EI) %",
@@ -25,7 +26,7 @@ function doPost(e) {
             ]);
 
             // Format header row
-            sheet.getRange(1, 1, 1, 18).setFontWeight("bold").setBackground("#f3f3f3");
+            sheet.getRange(1, 1, 1, 19).setFontWeight("bold").setBackground("#f3f3f3");
         }
 
         // Append data
@@ -34,6 +35,7 @@ function doPost(e) {
             data.userClass || "",
             data.userSeat || "",
             data.userName || "",
+            data.userOtherChild ? "子女非新科國中學生" : "",
             data.mbtiCode || "",
             data.mbtiName || "",
             data.stats.EI || "",
