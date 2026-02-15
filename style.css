@@ -213,6 +213,14 @@ section.active {
     gap: 0.5rem;
 }
 
+.highlight-bright {
+    color: #4ade80;
+    /* Bright mint green */
+    font-weight: 800;
+    text-decoration: underline;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.3);
+}
+
 .info-label {
     color: var(--text-dim);
     font-weight: 600;
