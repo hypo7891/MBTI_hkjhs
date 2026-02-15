@@ -82,9 +82,22 @@ body {
 
 .container {
     width: 95%;
-    max-width: 650px;
+    max-width: 1100px;
     z-index: 1;
     padding: 20px 0;
+}
+
+/* Result Card Specifics */
+.result-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    padding: 2.5rem;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    max-width: 650px;
+    margin: 0 auto;
 }
 
 section {
@@ -127,20 +140,80 @@ section.active {
     font-size: 1.1rem;
 }
 
-.start-card,
-.result-card {
+.intro-text {
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Cards Layout */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: stretch;
+}
+
+.card {
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 24px;
-    text-align: center;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    text-align: left;
+    box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.intro-text {
-    margin-bottom: 2rem;
-    font-size: 1.05rem;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-content {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    flex-grow: 1;
+}
+
+.info-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.info-item {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.info-label {
+    color: var(--text-dim);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.registration-card .primary-btn {
+    margin-top: 1.5rem;
+    width: 100%;
+    text-align: center;
+    display: block;
+    text-decoration: none;
 }
 
 /* Input Grid */
@@ -211,12 +284,13 @@ input:focus {
 
 /* Source Info */
 .source-info {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
     border-top: 1px solid var(--glass-border);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-dim);
     line-height: 1.6;
+    text-align: center;
 }
 
 .source-info a {
