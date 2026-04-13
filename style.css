@@ -227,7 +227,8 @@ section.active {
     white-space: nowrap;
 }
 
-.registration-card .primary-btn {
+.registration-card .primary-btn,
+.handout-card .primary-btn {
     margin-top: 1.5rem;
     width: 100%;
     text-align: center;
